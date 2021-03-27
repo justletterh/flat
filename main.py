@@ -7,6 +7,7 @@ fp=lambda *x:os.path.join(".",*x)
 j=lambda *x:os.path.join(*x)
 fn=lambda f:f.split(os.path.sep)[-1]
 ext=lambda f:f'.{fn(f).split(".")[-1]}'
+fix=lambda f:j(*os.path.split(f)[:-1],".".join([x.lower() if x==fn(f).split(".")[-1] else x for x in fn(f).split(".")]))
 
 outdir=fp("games")
 indir=fp("a")
@@ -24,7 +25,7 @@ def look(f):
 def main():
     l=look(indir)
     for i in l:
-        cp(i,fp(outdir,fn(i)))
+        cp(i,fix(fp(outdir,fn(i))))
 
 def init():
     if os.path.exists(outdir):
